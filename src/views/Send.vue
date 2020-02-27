@@ -33,7 +33,7 @@ export default {
     }
   },
   async created() {
-    const account = await web3.eth.accounts.createAccount()
+    const account = await web3.eth.accounts.create()
 
     console.log(account)
   },
