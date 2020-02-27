@@ -7,10 +7,10 @@
           to simple steps below👇🏻
         </h1>
         <div class="headline pb-4">
-          1. Send Ethereum to the address: %address_name%
+          1. Send Ethereum to the address: {{ address }}
         </div>
         <div class="headline pb-4">
-          2. Share the link with anyone: %link_name%
+          2. Share the link with anyone: <a :href="link">{{ link }}</a>
         </div>
         <h2 class="display-1 indigo--text">Toss a Ethereum to your Witcher!</h2>
       </v-flex>
@@ -29,15 +29,24 @@ export default {
     return {
       address: '',
       privateKey: '',
-      balance: ''
-    }
+      link: ''
+    };
   },
   async created() {
-    const account = await web3.eth.accounts.create()
+    const wallet = await web3.eth.accounts.create();
 
-    console.log(account)
-  },
+    this.address = wallet.address;
+    this.privateKey = wallet.privateKey;
+    this.link = `${window.origin}/#${wallet.privateKey}`;
+  }
 };
 </script>
 
-<style></style>
+<style>
+.headline {
+  word-wrap: break-word;
+}
+.span {
+  background-color: aqua;
+}
+</style>

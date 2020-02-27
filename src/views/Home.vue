@@ -1,28 +1,20 @@
 <template>
   <div>
-    <Address />
+    <Address v-if="$route.hash" />
+    <Send v-if="!$route.hash" />
   </div>
 </template>
 
 <script>
 import Address from './Address';
+import Send from './Send';
 export default {
   name: 'Home',
   components: {
-    Address
-  },
-  data() {
-    return {};
-  },
-  methods: {}
+    Address,
+    Send
+  }
 };
 </script>
 
-<style>
-.headline {
-  word-wrap: break-word;
-}
-.span {
-  background-color: aqua;
-}
-</style>
+<style></style>
