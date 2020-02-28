@@ -7,11 +7,16 @@
           to simple steps below👇🏻
         </h1>
         <div class="headline pb-4">
-          1. Send Ethereum to the address: {{ address }}
+          1. Send Ethereum to the address:
+          <span id="toCopy">{{ address }}</span>
         </div>
-        <div class="headline pb-4">
-          2. Share the link with anyone: <a :href="link">{{ link }}</a>
+        <qrcode-vue :value="address" size="200" class="pb-4" level="H"></qrcode-vue>
+        <v-btn color="success" @click="copy()">Copy</v-btn>
+        <div class="headline pt-4 pb-4">
+          2. Share the link with anyone:
+          <a :href="link">{{ link }}</a>
         </div>
+        <div class="headline pb-4"></div>
         <h2 class="display-1 indigo--text">Toss a Ethereum to your Witcher!</h2>
       </v-flex>
     </v-layout>
@@ -19,11 +24,15 @@
 </template>
 
 <script>
+import QrcodeVue from 'qrcode.vue';
 import Web3 from 'web3';
 const web3 = new Web3(
   'https://ropsten.infura.io/v3/9c85a82e358f46d389135967ceeeea82'
 );
 export default {
+  components: {
+    QrcodeVue
+  },
   name: 'Address',
   data() {
     return {
@@ -34,10 +43,23 @@ export default {
   },
   async created() {
     const wallet = await web3.eth.accounts.create();
-
     this.address = wallet.address;
     this.privateKey = wallet.privateKey;
     this.link = `${window.origin}/#${wallet.privateKey}`;
+  },
+  methods: {
+    copy() {
+      let elm = document.querySelector('#toCopy');
+
+      if (window.getSelection) {
+        let selection = window.getSelection();
+        let range = document.createRange();
+        range.selectNodeContents(elm);
+        selection.removeAllRanges();
+        selection.addRange(range);
+        document.execCommand('Copy');
+      }
+    }
   }
 };
 </script>
