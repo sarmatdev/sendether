@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Sidebar/>
     <Address v-if="$route.hash" />
     <Send v-if="!$route.hash" />
   </div>
@@ -8,11 +9,13 @@
 <script>
 import Address from './Address';
 import Send from './Send';
+import Sidebar from '../components/Sidebar';
 export default {
   name: 'Home',
   components: {
     Address,
-    Send
+    Send,
+    Sidebar
   }
 };
 </script>
