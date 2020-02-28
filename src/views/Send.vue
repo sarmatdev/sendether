@@ -8,13 +8,18 @@
         </h1>
         <div class="headline pb-4">
           1. Send Ethereum to the address:
-          <span id="toCopy">{{ address }}</span>
+          <span id="toCopy">{{ wallet.address }}</span>
         </div>
-        <qrcode-vue :value="address" size="200" class="pb-4" level="H"></qrcode-vue>
+        <qrcode-vue
+          :value="wallet.address"
+          size="200"
+          class="pb-4"
+          level="H"
+        ></qrcode-vue>
         <v-btn color="success" @click="copy()">Copy</v-btn>
         <div class="headline pt-4 pb-4">
           2. Share the link with anyone:
-          <a :href="link">{{ link }}</a>
+          <a :href="wallet.link">{{ wallet.link }}</a>
         </div>
         <div class="headline pb-4"></div>
         <h2 class="display-1 indigo--text">Toss a Ethereum to your Witcher!</h2>
@@ -25,27 +30,17 @@
 
 <script>
 import QrcodeVue from 'qrcode.vue';
-import Web3 from 'web3';
-const web3 = new Web3(
-  'https://ropsten.infura.io/v3/9c85a82e358f46d389135967ceeeea82'
-);
+
 export default {
   components: {
     QrcodeVue
   },
   name: 'Address',
   data() {
-    return {
-      address: '',
-      privateKey: '',
-      link: ''
-    };
+    return {};
   },
   async created() {
-    const wallet = await web3.eth.accounts.create();
-    this.address = wallet.address;
-    this.privateKey = wallet.privateKey;
-    this.link = `${window.origin}/#${wallet.privateKey}`;
+    this.$store.dispatch('createWallet');
   },
   methods: {
     copy() {
@@ -60,6 +55,11 @@ export default {
         document.execCommand('Copy');
       }
     }
+  },
+  computed: {
+    wallet() {
+      return this.$store.getters.wallet;
+    }
   }
 };
 </script>
@@ -67,8 +67,5 @@ export default {
 <style>
 .headline {
   word-wrap: break-word;
-}
-.span {
-  background-color: aqua;
 }
 </style>
