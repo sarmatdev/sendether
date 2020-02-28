@@ -10,7 +10,6 @@ export default {
   mutations: {
     setWallet(state, payload) {
       state.wallet = payload;
-      console.log(state.wallet);
     }
   },
   actions: {

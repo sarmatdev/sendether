@@ -39,7 +39,7 @@ export default {
   data() {
     return {};
   },
-  async created() {
+  created() {
     this.$store.dispatch('createWallet');
   },
   methods: {
