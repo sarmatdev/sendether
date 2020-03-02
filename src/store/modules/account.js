@@ -11,6 +11,9 @@ export default {
   mutations: {
     setAccount(state, payload) {
       state.account = payload;
+    },
+    updateBalance(state, payload) {
+      state.account.balance = payload;
     }
   },
   actions: {
@@ -42,7 +45,10 @@ export default {
             web3.utils.toWei(`${transaction.gasPrice}`, 'gwei')
           )
         };
-        const privateKey = new Buffer(state.account.privateKey.slice(2, state.account.privateKey.length), 'hex')
+        const privateKey = new Buffer(
+          state.account.privateKey.slice(2, state.account.privateKey.length),
+          'hex'
+        );
 
         // Sign the transaction
         const tx = new Tx(txObject);
@@ -54,9 +60,16 @@ export default {
         // Broadcast the transaction
         web3.eth.sendSignedTransaction(raw, (err, txHash) => {
           console.log('txHash:', txHash);
-          console.log(err)
+          console.log(err);
           // Now go check etherscan to see the transaction!
         });
+      });
+    },
+    updateBalance({ commit, state }) {
+      web3.eth.getBalance(state.account.address, (err, wei) => {
+        let balance = web3.utils.fromWei(wei, 'ether');
+        console.log(balance);
+        commit('updateBalance', balance);
       });
     }
   },
