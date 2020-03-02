@@ -1,6 +1,6 @@
 <template>
-  <v-app-bar color="orange darken-2" flat app>
-    <v-toolbar-title class="grey lighten-5"><h1 class="headline font-weight-medium">SendEther</h1></v-toolbar-title>
+  <v-app-bar color="blue-grey lighten-1" flat app>
+    <v-toolbar-title><h1 class="headline font-weight-medium">SendEther</h1></v-toolbar-title>
   </v-app-bar>
 </template>
 
