@@ -2,13 +2,14 @@
   <v-form>
     <v-layout column justify-center align-center>
       <v-card width="430px">
+        <Loading v-if="loading" />
         <v-card-title>Send Ethers Directly</v-card-title>
         <v-card-text>
           <v-text-field
             type="text"
             hint="Be careful when specifying the address!"
             label="Wallet Address"
-            v-model="tranaction.address"
+            v-model="transaction.address"
           ></v-text-field>
           <v-text-field
             type="number"
@@ -16,7 +17,7 @@
             min="0"
             step="0.1"
             label="Amount"
-            v-model="tranaction.amount"
+            v-model="transaction.amount"
           ></v-text-field>
           <!-- <v-card-subtitle class="pa-0">Choose Transaction speed</v-card-subtitle>
               <v-radio-group v-model="speed">
@@ -58,7 +59,7 @@
                 outlined
                 min="0"
                 label="Gas Limit"
-                v-model="tranaction.gasLimit"
+                v-model="transaction.gasLimit"
               ></v-text-field>
               <v-text-field
                 type="number"
@@ -66,7 +67,7 @@
                 min="0"
                 step="1000"
                 label="Gas Price"
-                v-model="tranaction.gasPrice"
+                v-model="transaction.gasPrice"
               ></v-text-field>
             </v-card-text>
           </div>
@@ -80,11 +81,15 @@
 </template>
 
 <script>
+import Loading from '../components/UI/Loading';
+
 export default {
+  components: {
+    Loading
+  },
   data: () => ({
     show: false,
-    // speed: '',
-    tranaction: {
+    transaction: {
       address: '',
       amount: '',
       gasPrice: 1,
@@ -93,12 +98,17 @@ export default {
   }),
   methods: {
     sendTransaction() {
-      this.$store.dispatch('sendEther', this.tranaction)
+      this.$store.dispatch('sendEther', this.transaction);
     }
   },
   computed: {
     fee() {
-      return (this.tranaction.gasPrice * this.tranaction.gasLimit) / 100000000;
+      return (
+        (this.transaction.gasPrice * this.transaction.gasLimit) / 100000000
+      );
+    },
+    loading() {
+      return this.$store.getters.loading;
     }
   }
 };
