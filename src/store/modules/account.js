@@ -31,7 +31,8 @@ export default {
       };
       commit('setAccount', data);
     },
-    async sendEther({ commit, state }, transaction) {
+    async sendEther({ commit, state, dispatch }, transaction) {
+      commit('setLoading', true);
       web3.eth.getTransactionCount(state.account.address, (err, txCount) => {
         // Build the transaction
         const txObject = {
@@ -59,6 +60,8 @@ export default {
 
         // Broadcast the transaction
         web3.eth.sendSignedTransaction(raw, (err, txHash) => {
+          commit('setLoading', false);
+          dispatch('updateBalance');
           console.log('txHash:', txHash);
           console.log(err);
           // Now go check etherscan to see the transaction!
