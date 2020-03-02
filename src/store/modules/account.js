@@ -6,7 +6,11 @@ const Tx = require('ethereumjs-tx');
 
 export default {
   state: {
-    account: {}
+    account: {},
+    txHash: {
+      hash: '',
+      show: false
+    }
   },
   mutations: {
     setAccount(state, payload) {
@@ -14,6 +18,11 @@ export default {
     },
     updateBalance(state, payload) {
       state.account.balance = payload;
+    },
+    setLink(state, payload) {
+      state.txHash.hash = payload;
+      state.txHash.show = true;
+      console.log(state.txHash);
     }
   },
   actions: {
@@ -62,7 +71,7 @@ export default {
         web3.eth.sendSignedTransaction(raw, (err, txHash) => {
           commit('setLoading', false);
           dispatch('updateBalance');
-          console.log('txHash:', txHash);
+          commit('setLink', txHash);
           console.log(err);
           // Now go check etherscan to see the transaction!
         });
@@ -79,6 +88,9 @@ export default {
   getters: {
     account(state) {
       return state.account;
+    },
+    link(state) {
+      return state.txHash;
     }
   }
 };

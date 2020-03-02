@@ -8,12 +8,18 @@
             Your balance — {{ account.balance }} ETH
           </div>
           <v-btn icon color="red" @click="updateBalance">
-            <v-icon>mdi-cached</v-icon>
+            <v-icon class="">mdi-cached</v-icon>
           </v-btn>
         </v-row>
         <TransactionForm />
-        <div class="headline pa-4">
+        <!-- <div class="headline pa-4">
           Or use them manually using the address and private key
+        </div> -->
+        <div v-if="link.show" class="headline pb-4">
+          Explore transaction:
+          <a :href="`https://ropsten.etherscan.io/tx/${link}`" target="_blank"
+            >https://ropsten.etherscan.io/tx/{{ link.hash }}</a
+          >
         </div>
         <div class="headline pb-4">Address: {{ account.address }}</div>
         <div class="headline pb-4">Private Key: {{ account.privateKey }}</div>
@@ -40,6 +46,9 @@ export default {
   computed: {
     account() {
       return this.$store.getters.account;
+    },
+    link() {
+      return this.$store.getters.link;
     }
   }
 };
@@ -48,5 +57,40 @@ export default {
 <style>
 .headline {
   word-wrap: break-word;
+}
+.animation {
+  animation: loader 1s infinite;
+}
+@-moz-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+@-webkit-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+@-o-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+@keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
 }
 </style>
