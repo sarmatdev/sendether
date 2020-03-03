@@ -2,15 +2,10 @@ import Web3 from 'web3';
 const web3 = new Web3(
   'https://ropsten.infura.io/v3/9c85a82e358f46d389135967ceeeea82'
 );
-const Tx = require('ethereumjs-tx');
 
 export default {
   state: {
-    account: {},
-    txHash: {
-      hash: '',
-      show: false
-    }
+    account: {}
   },
   mutations: {
     setAccount(state, payload) {
@@ -18,11 +13,6 @@ export default {
     },
     updateBalance(state, payload) {
       state.account.balance = payload;
-    },
-    setLink(state, payload) {
-      state.txHash.hash = payload;
-      state.txHash.show = true;
-      console.log(state.txHash);
     }
   },
   actions: {
@@ -40,43 +30,6 @@ export default {
       };
       commit('setAccount', data);
     },
-    async sendEther({ commit, state, dispatch }, transaction) {
-      commit('setLoading', true);
-      web3.eth.getTransactionCount(state.account.address, (err, txCount) => {
-        // Build the transaction
-        const txObject = {
-          nonce: web3.utils.toHex(txCount),
-          to: transaction.address,
-          value: web3.utils.toHex(
-            web3.utils.toWei(`${transaction.amount}`, 'ether')
-          ),
-          gasLimit: web3.utils.toHex(transaction.gasLimit),
-          gasPrice: web3.utils.toHex(
-            web3.utils.toWei(`${transaction.gasPrice}`, 'gwei')
-          )
-        };
-        const privateKey = new Buffer(
-          state.account.privateKey.slice(2, state.account.privateKey.length),
-          'hex'
-        );
-
-        // Sign the transaction
-        const tx = new Tx(txObject);
-        tx.sign(privateKey);
-
-        const serializedTx = tx.serialize();
-        const raw = '0x' + serializedTx.toString('hex');
-
-        // Broadcast the transaction
-        web3.eth.sendSignedTransaction(raw, (err, txHash) => {
-          commit('setLoading', false);
-          dispatch('updateBalance');
-          commit('setLink', txHash);
-          console.log(err);
-          // Now go check etherscan to see the transaction!
-        });
-      });
-    },
     updateBalance({ commit, state }) {
       web3.eth.getBalance(state.account.address, (err, wei) => {
         let balance = web3.utils.fromWei(wei, 'ether');
@@ -88,9 +41,6 @@ export default {
   getters: {
     account(state) {
       return state.account;
-    },
-    link(state) {
-      return state.txHash;
     }
   }
 };
