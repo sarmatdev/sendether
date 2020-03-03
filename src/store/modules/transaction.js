@@ -49,11 +49,14 @@ export default {
         const raw = '0x' + serializedTx.toString('hex');
 
         web3.eth.sendSignedTransaction(raw, (err, txHash) => {
-          commit('setLoading', false);
-          commit('setSnackbar', { text: 'Transaction sended', show: true });
-          dispatch('updateBalance');
-          commit('setLink', txHash);
-          console.log(err);
+          if (txHash) {
+            commit('setLoading', false);
+            commit('setSnackbar', { text: 'Transaction sended', show: true });
+            dispatch('updateBalance');
+            commit('setLink', txHash);
+          } else if (err) {
+            console.log(err);
+          }
         });
       });
     }
