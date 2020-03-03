@@ -11,9 +11,7 @@
           </v-btn>
         </v-row>
         <TransactionForm />
-        <!-- <div class="headline pa-4">
-          Or use them manually using the address and private key
-        </div> -->
+        <WalletData :account="account" />
         <div v-if="link.show" class="headline pb-4">
           Explore transaction:
           <a
@@ -22,14 +20,6 @@
             >https://ropsten.etherscan.io/tx/{{ link.hash }}</a
           >
         </div>
-        <v-row>
-          <v-col cols="12">
-            <div class="headline pb-4">Address: {{ account.address }}</div>
-            <div class="headline pb-4">
-              Private Key: {{ account.privateKey }}
-            </div>
-          </v-col>
-        </v-row>
       </v-flex>
     </v-layout>
   </v-container>
@@ -37,11 +27,9 @@
 
 <script>
 import TransactionForm from '../components/TransactionForm';
+import WalletData from '../components/WalletData';
 export default {
-  components: { TransactionForm },
-  data() {
-    return {};
-  },
+  components: { TransactionForm, WalletData },
   created() {
     this.$store.dispatch('createAccount');
   },
