@@ -5,42 +5,33 @@
         <Loading v-if="loading" />
         <v-card-title>Send Ethers Directly</v-card-title>
         <v-card-text>
-          <v-text-field
-            type="text"
-            hint="Be careful when specifying the address!"
-            label="Wallet Address"
-            v-model="transaction.address"
-          ></v-text-field>
-          <v-text-field
-            type="number"
-            outlined
-            min="0"
-            step="0.1"
-            label="Amount"
-            v-model="transaction.amount"
-          ></v-text-field>
-          <!-- <v-card-subtitle class="pa-0">Choose Transaction speed</v-card-subtitle>
-              <v-radio-group v-model="speed">
-                <v-row>
-                  <v-col cols="12" xs="4" sm="4" md="4">
-                    <v-radio
-                      label="Fastest"
-                      color="info"
-                      value="21000"
-                    ></v-radio>
-                  </v-col>
-                  <v-col cols="12" xs="4" sm="4" md="4">
-                    <v-radio
-                      label="Fast"
-                      color="green"
-                      value="warning"
-                    ></v-radio>
-                  </v-col>
-                  <v-col cols="12" xs="4" sm="4" md="4">
-                    <v-radio label="Slow" color="error" value="error"></v-radio>
-                  </v-col>
-                </v-row>
-              </v-radio-group> -->
+          <v-row>
+            <v-col cols="12">
+              <v-text-field
+                type="text"
+                hint="Be careful when specifying the address!"
+                label="Wallet Address"
+                v-model="transaction.address"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12">
+              <v-text-field
+                type="number"
+                outlined
+                min="0"
+                step="0.1"
+                label="Amount"
+                v-model="transaction.amount"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12">
+              <v-btn @click="useWholeBalance">Use whole Balance</v-btn>
+            </v-col>
+          </v-row>
           Transacion fee is {{ fee }} ETH
         </v-card-text>
         <v-card-text>
@@ -65,7 +56,7 @@
                 type="number"
                 outlined
                 min="0"
-                step="1000"
+                step="1"
                 label="Gas Price"
                 v-model="transaction.gasPrice"
               ></v-text-field>
@@ -82,7 +73,7 @@
 
 <script>
 import Loading from '../components/UI/Loading';
-
+import Web3 from 'web3';
 export default {
   components: {
     Loading
@@ -99,16 +90,24 @@ export default {
   methods: {
     sendTransaction() {
       this.$store.dispatch('sendEther', this.transaction);
+    },
+    useWholeBalance() {
+      this.transaction.amount = this.balance - this.fee;
+      console.log(this.transaction.amount);
     }
   },
   computed: {
     fee() {
-      return (
-        (this.transaction.gasPrice * this.transaction.gasLimit) / 100000000
+      return Web3.utils.fromWei(
+        `${this.transaction.gasLimit * this.transaction.gasPrice}`,
+        'Gwei'
       );
     },
     loading() {
       return this.$store.getters.loading;
+    },
+    balance() {
+      return this.$store.getters.account.balance;
     }
   }
 };
