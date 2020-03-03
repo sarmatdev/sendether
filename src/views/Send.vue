@@ -3,9 +3,9 @@
     <v-layout column justify-center align-center>
       <v-flex xs12 md10 class="text-center">
         <h1 class="title pb-4">
-          Send Ethereum to anyone! Recipient can spend, transfer and exchange coins without wallet.
+          Send Ethereum to anyone! Recipient can spend, transfer and exchange
+          coins without wallet.
         </h1>
-        <!-- <v-btn x-large color="success" dark>send Ethereum</v-btn> -->
         <div class="headline pb-4">
           1. Send Ethereum to the address:
           <span id="toCopy">{{ wallet.address }}</span>
