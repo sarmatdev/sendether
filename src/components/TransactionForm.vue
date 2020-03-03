@@ -12,6 +12,7 @@
                 hint="Be careful when specifying the address!"
                 label="Wallet Address"
                 v-model="transaction.address"
+                :error-messages="error"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -80,6 +81,7 @@ export default {
   },
   data: () => ({
     show: false,
+    error: [],
     transaction: {
       address: '',
       amount: '',
@@ -89,7 +91,12 @@ export default {
   }),
   methods: {
     sendTransaction() {
-      this.$store.dispatch('sendEther', this.transaction);
+      if (Web3.utils.isAddress(this.transaction.address)) {
+        this.error = [];
+        this.$store.dispatch('sendEther', this.transaction);
+      } else {
+        this.error.push('This address not valid for Ethereum!');
+      }
     },
     useWholeBalance() {
       this.transaction.amount = this.balance - this.fee;
