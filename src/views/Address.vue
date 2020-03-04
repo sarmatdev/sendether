@@ -2,14 +2,7 @@
   <v-container>
     <v-layout column justify-center align-center>
       <v-flex xs12 md10 class="text-center">
-        <v-row align="baseline" justify="center">
-          <div class="headline pb-4">
-            Your balance — {{ account.balance }} ETH
-          </div>
-          <v-btn icon color="red" @click="updateBalance">
-            <v-icon class="">mdi-cached</v-icon>
-          </v-btn>
-        </v-row>
+        <Balance />
         <TransactionForm />
         <WalletData :account="account" />
         <div v-if="link.show" class="headline pb-4">
@@ -28,15 +21,11 @@
 <script>
 import TransactionForm from '../components/TransactionForm';
 import WalletData from '../components/WalletData';
+import Balance from '../components/Balance';
 export default {
-  components: { TransactionForm, WalletData },
+  components: { TransactionForm, WalletData, Balance },
   created() {
     this.$store.dispatch('createAccount');
-  },
-  methods: {
-    updateBalance() {
-      this.$store.dispatch('updateBalance');
-    }
   },
   computed: {
     account() {
