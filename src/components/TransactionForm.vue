@@ -17,7 +17,6 @@
                 @input="$v.address.$touch()"
                 @blur="$v.address.$touch()"
               ></v-text-field>
-              {{ accountAddress }}
             </v-col>
           </v-row>
           <v-row>
