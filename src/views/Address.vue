@@ -4,15 +4,8 @@
       <v-flex xs12 md10 class="text-center">
         <Balance />
         <TransactionForm />
+        <ExplorerLink />
         <WalletData :account="account" />
-        <div v-if="link.show" class="headline pb-4">
-          Explore transaction:
-          <a
-            :href="`https://ropsten.etherscan.io/tx/${link.hash}`"
-            target="_blank"
-            >https://ropsten.etherscan.io/tx/{{ link.hash }}</a
-          >
-        </div>
       </v-flex>
     </v-layout>
   </v-container>
@@ -22,17 +15,15 @@
 import TransactionForm from '../components/TransactionForm';
 import WalletData from '../components/WalletData';
 import Balance from '../components/Balance';
+import ExplorerLink from '../components/ExplorerLink';
 export default {
-  components: { TransactionForm, WalletData, Balance },
+  components: { TransactionForm, WalletData, Balance, ExplorerLink },
   created() {
     this.$store.dispatch('createAccount');
   },
   computed: {
     account() {
       return this.$store.getters.account;
-    },
-    link() {
-      return this.$store.getters.link;
     }
   }
 };
