@@ -16,11 +16,14 @@
           class="pb-4"
           level="H"
         ></qrcode-vue>
-        <v-btn color="success" @click="copy()">Copy</v-btn>
+        <v-btn color="success" @click="copyAddress(wallet.address)">
+          Copy Address
+        </v-btn>
         <div class="headline pt-4 pb-4">
           2. Share the link with anyone:
           <a :href="wallet.link">{{ wallet.link }}</a>
         </div>
+        <v-btn color="success" @click="copyLink(wallet.link)">Copy Link</v-btn>
         <div class="headline pb-4"></div>
         <h2 class="display-1 indigo--text">Toss a Ethereum to your Witcher!</h2>
       </v-flex>
@@ -43,17 +46,21 @@ export default {
     this.$store.dispatch('createWallet');
   },
   methods: {
-    copy() {
-      let elm = document.querySelector('#toCopy');
-
-      if (window.getSelection) {
-        let selection = window.getSelection();
-        let range = document.createRange();
-        range.selectNodeContents(elm);
-        selection.removeAllRanges();
-        selection.addRange(range);
-        document.execCommand('Copy');
-      }
+    copyAddress(address) {
+      this.$clipboard(address);
+      this.$store.commit('setSnackbar', {
+        text: 'Address copied!',
+        show: true,
+        color: 'success'
+      });
+    },
+    copyLink(link) {
+      this.$clipboard(link);
+      this.$store.commit('setSnackbar', {
+        text: 'Link copied!',
+        show: true,
+        color: 'success'
+      });
     }
   },
   computed: {
