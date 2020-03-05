@@ -3,7 +3,7 @@
     <v-layout column justify-center align-center>
       <v-flex xs12 md10 class="text-center">
         <h1 class="title pb-4">
-          Send Ethereum to anyone! Recipient can spend, transfer and exchange
+          Send Ethereum to anyone! Recipient can spend and transfer
           coins without wallet.
         </h1>
         <div class="headline pb-4">
@@ -41,9 +41,6 @@ export default {
     Warning
   },
   name: 'Address',
-  data() {
-    return {};
-  },
   created() {
     this.$store.dispatch('createWallet');
   },
