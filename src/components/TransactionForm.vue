@@ -11,8 +11,11 @@
                 type="text"
                 hint="Be careful when specifying the address!"
                 label="Wallet Address"
-                v-model="transaction.address"
-                :error-messages="error"
+                v-model="address"
+                :error-messages="addressError"
+                required
+                @input="$v.address.$touch()"
+                @blur="$v.address.$touch()"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -24,10 +27,15 @@
                 min="0"
                 step="0.1"
                 label="Amount"
-                v-model="transaction.amount"
+                v-model="amount"
+                :error-messages="amountError"
+                required
+                @input="$v.amount.$touch()"
+                @blur="$v.amount.$touch()"
               ></v-text-field>
             </v-col>
           </v-row>
+          {{ balance }}
           <v-row>
             <v-col cols="12">
               <v-btn @click="useWholeBalance">Use whole Balance</v-btn>
@@ -50,22 +58,29 @@
                 type="number"
                 outlined
                 min="0"
+                step="1000"
                 label="Gas Limit"
-                v-model="transaction.gasLimit"
+                v-model="gasLimit"
               ></v-text-field>
               <v-text-field
                 type="number"
                 outlined
-                min="0"
+                min="1"
                 step="1"
                 label="Gas Price"
-                v-model="transaction.gasPrice"
+                v-model="gasPrice"
               ></v-text-field>
             </v-card-text>
           </div>
         </v-expand-transition>
         <v-card-actions>
-          <v-btn block @click="sendTransaction" color="success">Send</v-btn>
+          <v-btn
+            block
+            @click="sendTransaction"
+            :disabled="formIsValid"
+            color="success"
+            >Send</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-layout>
@@ -75,40 +90,69 @@
 <script>
 import Loading from '../components/UI/Loading';
 import Web3 from 'web3';
+import { required } from 'vuelidate/lib/validators';
 export default {
   components: {
     Loading
   },
   data: () => ({
     show: false,
-    error: [],
-    transaction: {
-      address: '',
-      amount: '',
-      gasPrice: 1,
-      gasLimit: 21000
-    }
+    maxAmount: '',
+    address: '',
+    amount: '',
+    gasPrice: 1,
+    gasLimit: 21000
   }),
+  validations: {
+    address: {
+      required
+    },
+    amount: {
+      required
+    }
+  },
   methods: {
     sendTransaction() {
-      if (Web3.utils.isAddress(this.transaction.address)) {
-        this.error = [];
-        this.$store.dispatch('sendEther', this.transaction);
-      } else {
-        this.error.push('This address not valid for Ethereum!');
-      }
+      this.$store.dispatch('sendEther', {
+        address: this.address,
+        amount: this.amount,
+        gasPrice: this.gasPrice,
+        gasLimit: this.gasLimit
+      });
     },
     useWholeBalance() {
-      this.transaction.amount = this.balance - this.fee;
-      console.log(this.transaction.amount);
+      this.amount = this.balance - this.fee;
     }
   },
   computed: {
+    addressError() {
+      const errors = [];
+      if (!this.$v.address.$dirty) return errors;
+      !this.$v.address.required && errors.push('Address is required.');
+      !this.addressValid && errors.push('Address not valid');
+      return errors;
+    },
+    amountError() {
+      const errors = [];
+      if (!this.$v.amount.$dirty) return errors;
+      !this.$v.amount.required && errors.push('Amount is required.');
+      this.amount <= 0 && errors.push('Amount must be more than 0');
+      this.amount > this.balance &&
+        errors.push(`Amount must be less or equal ${this.balance}`);
+      return errors;
+    },
+    formIsValid() {
+      return !this.$v.$invalid &&
+        this.addressError.length == 0 &&
+        this.amountError.length == 0
+        ? false
+        : true;
+    },
     fee() {
-      return Web3.utils.fromWei(
-        `${this.transaction.gasLimit * this.transaction.gasPrice}`,
-        'Gwei'
-      );
+      return Web3.utils.fromWei(`${this.gasLimit * this.gasPrice}`, 'Gwei');
+    },
+    addressValid() {
+      return Web3.utils.isAddress(this.address);
     },
     loading() {
       return this.$store.getters.loading;
