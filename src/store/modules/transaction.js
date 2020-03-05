@@ -51,11 +51,13 @@ export default {
         web3.eth.sendSignedTransaction(raw, (err, txHash) => {
           if (txHash) {
             commit('setLoading', false);
-            commit('setSnackbar', { text: 'Transaction sended', show: true });
+            commit('setSnackbar', { text: 'Transaction sended.', show: true, color: 'success' });
             dispatch('updateBalance');
             commit('setLink', txHash);
           } else if (err) {
             console.log(err);
+            commit('setLoading', false);
+            commit('setSnackbar', { text: 'Something went wrong! Try later.', show: true, color: 'error' });
           }
         });
       });

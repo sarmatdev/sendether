@@ -4,7 +4,7 @@
     :timeout="timeout"
     top
     right
-    color="success"
+    :color="snackbar.color"
   >
     {{ snackbar.text }}
     <v-btn color="black" text dark @click="snackbar.show = false">

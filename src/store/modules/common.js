@@ -3,7 +3,8 @@ export default {
     loading: false,
     snackbar: {
       text: '',
-      show: false
+      show: false,
+      color: ''
     }
   },
   mutations: {
@@ -11,9 +12,9 @@ export default {
       state.loading = payload;
     },
     setSnackbar(state, payload) {
-      console.log(payload);
       state.snackbar.show = payload.show;
       state.snackbar.text = payload.text;
+      state.snackbar.color = payload.color;
     }
   },
   actions: {
