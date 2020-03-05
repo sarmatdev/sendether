@@ -2,7 +2,7 @@
   <v-form>
     <v-layout column justify-center align-center>
       <v-card width="430px">
-        <Loading v-if="loading" />
+        <Loading />
         <v-card-title>Send Ethers Directly</v-card-title>
         <v-card-text>
           <v-row>
@@ -185,9 +185,6 @@ export default {
     },
     addressValid() {
       return Web3.utils.isAddress(this.address);
-    },
-    loading() {
-      return this.$store.getters.loading;
     },
     balance() {
       return this.$store.getters.account.balance;

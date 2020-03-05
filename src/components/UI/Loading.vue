@@ -1,5 +1,5 @@
 <template>
-  <v-row align="center" justify="center">
+  <v-row v-if="loading" align="center" justify="center">
     <v-row justify="center">
       <v-overlay absolute>
         <v-progress-circular indeterminate size="64"></v-progress-circular>
@@ -9,7 +9,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  computed: {
+    loading() {
+      return this.$store.getters.loading;
+    }
+  }
+};
 </script>
 
 <style></style>
