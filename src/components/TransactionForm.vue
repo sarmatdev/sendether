@@ -57,10 +57,14 @@
               <v-text-field
                 type="number"
                 outlined
-                min="0"
+                min="21000"
                 step="1000"
                 label="Gas Limit"
                 v-model="gasLimit"
+                :error-messages="gasLimitError"
+                required
+                @input="$v.gasLimit.$touch()"
+                @blur="$v.gasLimit.$touch()"
               ></v-text-field>
               <v-text-field
                 type="number"
@@ -69,6 +73,10 @@
                 step="1"
                 label="Gas Price"
                 v-model="gasPrice"
+                :error-messages="gasPriceError"
+                required
+                @input="$v.gasPrice.$touch()"
+                @blur="$v.gasPrice.$touch()"
               ></v-text-field>
             </v-card-text>
           </div>
@@ -90,7 +98,7 @@
 <script>
 import Loading from '../components/UI/Loading';
 import Web3 from 'web3';
-import { required } from 'vuelidate/lib/validators';
+import { required, minValue } from 'vuelidate/lib/validators';
 export default {
   components: {
     Loading
@@ -109,6 +117,14 @@ export default {
     },
     amount: {
       required
+    },
+    gasPrice: {
+      required,
+      minValue: minValue(1)
+    },
+    gasLimit: {
+      required,
+      minValue: minValue(21000)
     }
   },
   methods: {
@@ -147,6 +163,22 @@ export default {
         this.amountError.length == 0
         ? false
         : true;
+    },
+    gasPriceError() {
+      const errors = [];
+      if (!this.$v.gasPrice.$dirty) return errors;
+      !this.$v.gasPrice.required && errors.push('Gas price is required.');
+      !this.$v.gasPrice.minValue &&
+        errors.push('Gas price must be greater than or equal 1');
+      return errors;
+    },
+    gasLimitError() {
+      const errors = [];
+      if (!this.$v.gasLimit.$dirty) return errors;
+      !this.$v.gasLimit.required && errors.push('Gas limit is required.');
+      !this.$v.gasLimit.minValue &&
+        errors.push('Gas limit must be greater than or equal 21000');
+      return errors;
     },
     fee() {
       return Web3.utils.fromWei(`${this.gasLimit * this.gasPrice}`, 'Gwei');
