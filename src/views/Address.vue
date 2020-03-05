@@ -3,8 +3,8 @@
     <v-layout column justify-center align-center>
       <v-flex xs12 md10 class="text-center">
         <Balance />
-        <TransactionForm />
         <ExplorerLink />
+        <TransactionForm />
         <WalletData :account="account" />
       </v-flex>
     </v-layout>

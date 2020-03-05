@@ -2,7 +2,7 @@
   <v-row align="baseline" justify="center">
     <div class="headline pb-4">Your balance — {{ balance }} ETH</div>
     <v-btn icon color="red" @click="updateBalance">
-      <v-icon class="custom-loader">mdi-cached</v-icon>
+      <v-icon>mdi-cached</v-icon>
     </v-btn>
   </v-row>
 </template>
