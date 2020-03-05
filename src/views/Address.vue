@@ -6,6 +6,7 @@
         <ExplorerLink />
         <TransactionForm />
         <WalletData :account="account" />
+        <Warning />
       </v-flex>
     </v-layout>
   </v-container>
@@ -16,8 +17,9 @@ import TransactionForm from '../components/TransactionForm';
 import WalletData from '../components/WalletData';
 import Balance from '../components/Balance';
 import ExplorerLink from '../components/ExplorerLink';
+import Warning from '../components/Warning';
 export default {
-  components: { TransactionForm, WalletData, Balance, ExplorerLink },
+  components: { TransactionForm, WalletData, Balance, ExplorerLink, Warning },
   created() {
     this.$store.dispatch('createAccount');
   },

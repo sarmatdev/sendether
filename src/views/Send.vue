@@ -26,6 +26,7 @@
         <v-btn color="success" @click="copyLink(wallet.link)">Copy Link</v-btn>
         <div class="headline pb-4"></div>
         <h2 class="display-1 indigo--text">Toss a Ethereum to your Witcher!</h2>
+        <Warning />
       </v-flex>
     </v-layout>
   </v-container>
@@ -33,10 +34,11 @@
 
 <script>
 import QrcodeVue from 'qrcode.vue';
-
+import Warning from '../components/Warning';
 export default {
   components: {
-    QrcodeVue
+    QrcodeVue,
+    Warning
   },
   name: 'Address',
   data() {
