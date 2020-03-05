@@ -17,6 +17,7 @@
                 @input="$v.address.$touch()"
                 @blur="$v.address.$touch()"
               ></v-text-field>
+              {{ accountAddress }}
             </v-col>
           </v-row>
           <v-row>
@@ -146,6 +147,10 @@ export default {
       if (!this.$v.address.$dirty) return errors;
       !this.$v.address.required && errors.push('Address is required.');
       !this.addressValid && errors.push('Address not valid');
+      this.address === this.accountAddress &&
+        errors.push(
+          ' This address matches the address of this wallet! Nice try, but no.'
+        );
       return errors;
     },
     amountError() {
@@ -188,6 +193,9 @@ export default {
     },
     balance() {
       return this.$store.getters.account.balance;
+    },
+    accountAddress() {
+      return this.$store.getters.account.address;
     }
   }
 };
