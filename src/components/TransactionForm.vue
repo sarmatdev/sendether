@@ -1,9 +1,10 @@
 <template>
   <v-form>
     <v-layout column justify-center align-center>
-      <v-card width="430px">
+      <v-card width="450px" elevation="10" class="mb-10">
         <Loading />
         <v-card-title>Send Ethers Directly</v-card-title>
+        <v-divider></v-divider>
         <v-card-text>
           <v-row>
             <v-col cols="12">
@@ -35,7 +36,6 @@
               ></v-text-field>
             </v-col>
           </v-row>
-          {{ balance }}
           <v-row>
             <v-col cols="12">
               <v-btn @click="useWholeBalance">Use whole Balance</v-btn>
@@ -137,7 +137,15 @@ export default {
       });
     },
     useWholeBalance() {
-      this.amount = this.balance - this.fee;
+      if (this.balance == 0) {
+        this.$store.commit('setSnackbar', {
+          show: true,
+          text: 'Your balance is empty!',
+          color: 'error'
+        });
+      } else {
+        this.amount = this.balance - this.fee;
+      }
     }
   },
   computed: {

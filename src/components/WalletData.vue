@@ -1,16 +1,21 @@
 <template>
-  <v-row justify="start">
-    <v-col cols="12">
-      <div class="headline pb-4">Address: {{ account.address }}</div>
-      <v-btn color="success" @click="copyAddress(account.address)"
-        >Copy Address</v-btn
-      >
-      <div class="headline pb-4">Private Key: {{ account.privateKey }}</div>
-      <v-btn color="success" @click="copyLink(account.privateKey)"
-        >Copy Private Key</v-btn
-      >
-    </v-col>
-  </v-row>
+  <v-layout column justify-center align-center>
+    <v-card width="450px" elevation="10" shaped>
+      <v-card-title>Or transfer money manually using wallet data</v-card-title>
+      <v-divider></v-divider>
+
+      <v-card-text>
+        <div class="headline pb-4">Address: {{ account.address }}</div>
+        <v-btn color="info" rounded @click="copyAddress(account.address)"
+          >Copy Address<v-icon>mdi-content-copy</v-icon></v-btn
+        >
+        <div class="headline pb-4">Private Key: {{ account.privateKey }}</div>
+        <v-btn color="info" rounded @click="copyLink(account.privateKey)"
+          >Copy Private Key<v-icon>mdi-content-copy</v-icon></v-btn
+        >
+      </v-card-text>
+    </v-card>
+  </v-layout>
 </template>
 
 <script>
@@ -37,4 +42,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.v-card__title {
+  word-break: normal;
+}
+</style>

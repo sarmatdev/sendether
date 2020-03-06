@@ -1,12 +1,7 @@
 <template>
-  <v-app-bar color="blue-grey lighten-1" flat app>
+  <v-app-bar color="light-blue accent-4" elevation="5" hide-on-scroll flat app>
     <v-toolbar-title>
-      <h1 class="headline font-weight-medium">SendEther</h1>
-    </v-toolbar-title>
-    <v-spacer></v-spacer>
-    <v-toolbar-title>
-      This app working in Ropsten Testnet! Get testnet ethers here
-      <a target="_blank" href="https://faucet.ropsten.be/">faucet.ropsten.be</a>
+      <h1 class="headline font-weight-light">SendEther</h1>
     </v-toolbar-title>
   </v-app-bar>
 </template>

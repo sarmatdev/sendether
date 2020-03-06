@@ -3,8 +3,8 @@
     <v-layout column justify-center align-center>
       <v-flex xs12 md10 class="text-center">
         <h1 class="title pb-4">
-          Send Ethereum to anyone! Recipient can spend and transfer
-          coins without wallet.
+          Send Ethereum to anyone! Recipient can spend and transfer coins
+          without wallet.
         </h1>
         <div class="headline pb-4">
           1. Send Ethereum to the address:
@@ -16,16 +16,16 @@
           class="pb-4"
           level="H"
         ></qrcode-vue>
-        <v-btn color="success" @click="copyAddress(wallet.address)">
-          Copy Address
+        <v-btn color="info" rounded @click="copyAddress(wallet.address)">
+          Copy Address<v-icon>mdi-content-copy</v-icon>
         </v-btn>
         <div class="headline pt-4 pb-4">
           2. Share the link with anyone:
           <a :href="wallet.link">{{ wallet.link }}</a>
         </div>
-        <v-btn color="success" @click="copyLink(wallet.link)">Copy Link</v-btn>
-        <div class="headline pb-4"></div>
-        <h2 class="display-1 indigo--text">Toss a Ethereum to your Witcher!</h2>
+        <v-btn color="info" rounded @click="copyLink(wallet.link)"
+          >Copy Link<v-icon>mdi-content-copy</v-icon></v-btn
+        >
         <Warning />
       </v-flex>
     </v-layout>
