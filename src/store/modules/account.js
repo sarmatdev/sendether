@@ -33,7 +33,6 @@ export default {
     updateBalance({ commit, state }) {
       web3.eth.getBalance(state.account.address, (err, wei) => {
         let balance = web3.utils.fromWei(wei, 'ether');
-        console.log(balance);
         commit('updateBalance', balance);
       });
     }

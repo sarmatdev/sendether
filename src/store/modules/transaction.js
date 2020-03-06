@@ -15,7 +15,6 @@ export default {
     setLink(state, payload) {
       state.txHash.hash = payload;
       state.txHash.show = true;
-      console.log(state.txHash);
     }
   },
   actions: {
@@ -59,7 +58,6 @@ export default {
             dispatch('updateBalance');
             commit('setLink', txHash);
           } else if (err) {
-            console.log(err);
             commit('setLoading', false);
             commit('setSnackbar', {
               text: 'Something went wrong! Try later.',
