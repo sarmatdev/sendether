@@ -1,5 +1,6 @@
 {
   "name": "sendether",
+  "author": "Sarmat Khachirov",
   "version": "0.1.0",
   "private": true,
   "scripts": {
