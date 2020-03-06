@@ -17,14 +17,14 @@
           level="H"
         ></qrcode-vue>
         <v-btn color="info" rounded @click="copyAddress(wallet.address)">
-          Copy Address<v-icon>mdi-content-copy</v-icon>
+          Copy Address<v-icon class="pl-2">mdi-content-copy</v-icon>
         </v-btn>
         <div class="headline pt-4 pb-4">
           2. Share the link with anyone:
           <a :href="wallet.link">{{ wallet.link }}</a>
         </div>
         <v-btn color="info" rounded @click="copyLink(wallet.link)"
-          >Copy Link<v-icon>mdi-content-copy</v-icon></v-btn
+          >Copy Link<v-icon class="pl-2">mdi-content-copy</v-icon></v-btn
         >
         <Warning />
       </v-flex>

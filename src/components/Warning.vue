@@ -1,7 +1,7 @@
 <template>
   <div class="pa-4">
     <div class="caption">
-      Careful! The link above is a password! Only share it with the person who
+      Careful! This website's url is a password! Only share it with the person who
       will use the money.
     </div>
     <div class="caption">

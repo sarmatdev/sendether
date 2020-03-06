@@ -38,13 +38,13 @@
           </v-row>
           <v-row>
             <v-col cols="12">
-              <v-btn @click="useWholeBalance">Use whole Balance</v-btn>
+              <v-btn @click="useWholeBalance">Use the whole Balance</v-btn>
             </v-col>
           </v-row>
           Transacion fee is {{ fee }} ETH
         </v-card-text>
         <v-card-text>
-          <div class="subtitle-1">You also can customize your transaction!</div>
+          <div class="subtitle-1">You can also customize your transaction!</div>
           <v-btn icon @click="show = !show">
             <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
           </v-btn>

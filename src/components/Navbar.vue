@@ -1,5 +1,12 @@
 <template>
-  <v-app-bar color="light-blue accent-4" elevation="5" hide-on-scroll flat app>
+  <v-app-bar
+    color="light-blue accent-4"
+    elevation="5"
+    hide-on-scroll
+    flat
+    dark
+    app
+  >
     <v-toolbar-title>
       <h1 class="headline font-weight-light">SendEther</h1>
     </v-toolbar-title>
