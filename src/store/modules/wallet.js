@@ -1,6 +1,6 @@
 import Web3 from 'web3';
 const web3 = new Web3(
-  'https://ropsten.infura.io/v3/9c85a82e358f46d389135967ceeeea82'
+  `https://mainnet.infura.io/v3/${process.env.VUE_APP_API_KEY}`
 );
 
 export default {
