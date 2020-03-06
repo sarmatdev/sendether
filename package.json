@@ -3,9 +3,11 @@
   "author": "Sarmat Khachirov",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://sarmatdev.github.io/sendether",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "core-js": "^3.6.4",
@@ -24,6 +26,7 @@
     "@vue/cli-plugin-router": "^4.2.0",
     "@vue/cli-plugin-vuex": "^4.2.0",
     "@vue/cli-service": "^4.2.0",
+    "gh-pages": "^2.2.0",
     "sass": "^1.19.0",
     "sass-loader": "^8.0.0",
     "vue-cli-plugin-vuetify": "^2.0.5",
