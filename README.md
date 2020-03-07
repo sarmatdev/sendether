@@ -1,4 +1,6 @@
-# sendether
+# SendEther
+
+SendEther is a Ethereum blockchain based dApp with the help send money to anyone, even if the recipient does not have an ethereum wallet.
 
 ## Project setup
 ```
