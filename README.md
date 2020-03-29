@@ -4,7 +4,7 @@ SendEther is a Ethereum blockchain based dApp with the help send money to anyone
 
 ## Setup Infura
 Create project on [Infura](https://infura.io/), and get API key.
-Create .env file in root directory and pass key like this
+Create ```.env``` file in root directory and pass key like this
 
 ```
 VUE_APP_API_KEY=api_key
