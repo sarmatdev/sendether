@@ -1,7 +1,4 @@
-import Web3 from 'web3';
-const web3 = new Web3(
-  `https://mainnet.infura.io/v3/${process.env.VUE_APP_API_KEY}`
-);
+import web3 from '@/services/web3'
 const Tx = require('ethereumjs-tx');
 
 export default {
